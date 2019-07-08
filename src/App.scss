@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,700|Russo+One&display=swap');
+
+@import './scss/vars';
+@import './scss/nav';
+@import './scss/card';
+
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  line-height: 1.5;
+  font-size: 18px;
+  font-family: $mainFont;
+}
+
+h1, h2, h3, h4, h5 {
+  color: $color1;
+  font-family: $headingFont;
+}
+.pagewrapper {
+  width: 95%;
+  margin: 0 auto;
+}
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
