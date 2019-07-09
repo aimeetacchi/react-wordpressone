@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Card({cat}) {
+export default function Card({cat, catPage}) {
     const {acf} = cat;
     const {name, color, bio, age, breed, image} = acf;
-    // console.log(image.url)
+    // console.log(acf)
     return (
         <div className="card">
             <h3 className="card__name">Name: {name}</h3>
@@ -12,7 +12,10 @@ export default function Card({cat}) {
             <section className="card__breed">Breed: {breed}</section>
             <section className="card__age">Age: {age}</section>
             <section className="card__color">Color: {color}</section>
-            <button>Read More..</button>
+            <section className="btn_container">
+                <button className="btn" onClick={() => catPage(cat.id)}>Read More..</button>
+            </section>
+            
         </div>
     )
 }

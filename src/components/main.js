@@ -8,6 +8,7 @@ export default class Main extends Component {
         perPage: 'per_page=4',
         totalPages: '3',
         currentPage: 1,
+        catPage: [],
     }
 
     componentDidMount() {
@@ -39,7 +40,22 @@ export default class Main extends Component {
          
      }
  
+     catPage = (id) => {
+            // Do a request to get the cat data that matches the id passed in...
+            console.log('clicking to get cat page', id);
 
+            const request = async () => {
+            // Make Request to -
+            let dataURL = `http://wordpressreactone.atspace.co.uk/wp-json/wp/v2/cats?include=${id}`
+            const res = await fetch(dataURL);
+            
+            const catPage = await res.json();
+            console.log(catPage)
+            this.setState({catPage})
+        }
+        request();
+
+     }
 
 
     render() {
@@ -49,7 +65,7 @@ export default class Main extends Component {
                 <h2>All the different cats from the wordpress API</h2>
                 <div className="cards">
                 {
-                    cats <= 0 ? <p>fetching cats...</p> : cats.map(cat => <Card key={cat.id} cat={cat}/>)
+                    cats <= 0 ? <p>fetching cats...</p> : cats.map(cat => <Card key={cat.id} cat={cat} catPage={this.catPage}/>)
                 }    
                 </div>
                 <div className="paganation">
