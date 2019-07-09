@@ -3,7 +3,7 @@ import React from 'react'
 export default function Card({cat}) {
     const {acf} = cat;
     const {name, color, bio, age, breed, image} = acf;
-    console.log(image.url)
+    // console.log(image.url)
     return (
         <div className="card">
             <h3 className="card__name">Name: {name}</h3>

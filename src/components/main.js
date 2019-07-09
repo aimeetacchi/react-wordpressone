@@ -5,59 +5,59 @@ export default class Main extends Component {
 
     state = {
         cats: [],
-        perPage: 'per_page=3',
+        perPage: 'per_page=4',
         totalPages: '3',
         currentPage: 1,
-        prev_page: '',
-        next_page: '',
     }
 
     componentDidMount() {
+        console.log('Component did Mount')
+        this.request();  
+    }
 
-        
+    request = async () => {
         let dataURL = `https://cors-anywhere.herokuapp.com/http://wordpressreactone.atspace.co.uk/wp-json/wp/v2/cats?${this.state.perPage}&page=${this.state.currentPage}&orderby=title&order=asc`;
-        
-    //     let wpFetchHeaders = {
-    //       headers: {
-    //         'Access-Control-Allow-Origin': '*',
-    //         'Access-Control-Expose-Headers': 'x-wp-total'
-    //       }
-    //     }
-        
-    //     async function getNumPosts() {
-    //         const { headers } = await fetch(dataURL, wpFetchHeaders)
-    //         return headers['x-wp-totalpages']
-    //     }
 
-    //    getNumPosts()
-
-        const request = async () => {
-            const res = await fetch(dataURL);
-            // console.log(res.headers)
-            const cats = await res.json();
-            this.setState({cats})
-        }
-        request()   
+        const res = await fetch(dataURL);
+        // console.log(res.headers)
+        const cats = await res.json();
+        this.setState({cats})
     }
 
-    getPosts = () => {
-        console.log('button clicked')
+    prevPage = (currentPage) => {
+        this.setState({currentPage: currentPage - 1}, () => {
+            this.request();
+            console.log('clicking prev page')
+        }) 
     }
 
-   
+    nextPage = (currentPage) => {
+       this.setState({currentPage: currentPage + 1}, () => {
+        this.request();
+        console.log('clicking next page')
+       })
+         
+     }
+ 
+
+
 
     render() {
+        const {currentPage, cats} = this.state;
         return (
             <main>
                 <h2>All the different cats from the wordpress API</h2>
                 <div className="cards">
                 {
-                    this.state.cats <= 0 ? <p>fetching cats...</p> : this.state.cats.map(cat => <Card key={cat.id} cat={cat}/>)
+                    cats <= 0 ? <p>fetching cats...</p> : cats.map(cat => <Card key={cat.id} cat={cat}/>)
                 }    
                 </div>
                 <div className="paganation">
-                    <button className="prev" onClick={() => this.getPosts(this.prev_page)}> + Prev </button>
-                    <button className="next" onClick={() => this.getPosts(this.next_page)}>Next + </button>
+                    
+                    {currentPage > 1 ? <div className="prev" onClick={() => this.prevPage(currentPage)}> + Prev </div> : null}
+
+                    {currentPage < 3 ? <div className="next" onClick={() => this.nextPage(currentPage)}>Next + </div> : null}
+                    
                 </div>
             </main>
         )
