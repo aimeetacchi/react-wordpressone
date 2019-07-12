@@ -38,19 +38,20 @@
         .card__color {
             padding: 0 20px;
         }
-        .btn_container {
-            display:flex;
-            justify-content: flex-end;
-        }
-        .btn {
-            border:none;
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: $color1;
-            color: white;
-            margin: 0 10px;
-        }
     }
+}
+
+.btn_container {
+    display:flex;
+    justify-content: flex-end;
+}
+.btn {
+    border:none;
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: $color1;
+    color: white;
+    margin: 0;
 }
 
 .paganation {
@@ -62,10 +63,20 @@
         text-align: center;
         background-color: $color2;
         color: white;
-        width: 150px;
-        padding: 10px 0;
-        font-size: 20px;
+        width: 100px;
+        font-size: 14px;
+        transition: all .3s ease-out;
         border:none;
-        border-radius: 20px;
+        &:hover {
+            background-color: darken($color2, 8%);
+        }
     }
+}
+
+.show {
+    display: grid;
+}
+
+.hidden {
+    display: none;
 }

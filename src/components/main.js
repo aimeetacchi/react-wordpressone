@@ -50,31 +50,52 @@ export default class Main extends Component {
             const res = await fetch(dataURL);
             
             const catPage = await res.json();
-            console.log(catPage)
             this.setState({catPage})
         }
         request();
 
      }
 
+     goBack = () => {
+        this.setState({
+            catPage: []
+        })
+     }
+
 
     render() {
-        const {currentPage, cats} = this.state;
+        const {currentPage, cats, catPage} = this.state;
+
         return (
             <main>
                 <h2>All the different cats from the wordpress API</h2>
-                <div className="cards">
-                {
-                    cats <= 0 ? <p>fetching cats...</p> : cats.map(cat => <Card key={cat.id} cat={cat} catPage={this.catPage}/>)
-                }    
-                </div>
-                <div className="paganation">
+                <div className={"paganation " + (catPage.length === 0 ? 'show' : 'hidden')}>
                     
                     {currentPage > 1 ? <div className="prev" onClick={() => this.prevPage(currentPage)}> + Prev </div> : null}
 
                     {currentPage < 3 ? <div className="next" onClick={() => this.nextPage(currentPage)}>Next + </div> : null}
                     
                 </div>
+                <div className={"cards " + (catPage.length === 0 ? 'show' : 'hidden')}>
+                {
+                    cats <= 0 ? <p>fetching cats...</p> : cats.map(cat => <Card key={cat.id} cat={cat} catPage={this.catPage}/>)
+                }    
+                </div>
+                <div className={"catPage " + (catPage.length >= 1 ? 'show' : 'hidden')}>
+                      
+                    {catPage.length >= 1 ? catPage.map(cat => (
+                                    <div key={cat.id} className="cat">
+                                        <h1 className="name"> {cat.acf.name} </h1>
+                                        <div className="bio"> Bio: <br/>{cat.acf.bio} </div>
+                                        <br/>
+                                        <div className="color"> {cat.acf.color} </div>
+                                        <div className="age"> {cat.acf.age} </div>
+                                        <div className="btn" onClick={() => this.goBack()}> Go Back </div>
+                                    </div>
+                                    )) : null}
+
+                </div>
+                
             </main>
         )
     }
